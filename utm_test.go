@@ -113,3 +113,25 @@ func TestSRID(t *testing.T) {
 		})
 	}
 }
+
+func TestParseZone(t *testing.T) {
+	tests := []struct {
+		input string
+		zone  Zone
+		valid bool
+	}{
+		{input: "45N", zone: Zone{N: 45, North: true}, valid: true},
+		{input: "12J", zone: Zone{N: 12, North: false}, valid: true},
+		{input: "3G", zone: Zone{N: 3, North: false}, valid: true},
+		{input: "5R", zone: Zone{N: 5, North: true}, valid: true},
+	}
+	for _, tt := range tests {
+		t.Run(tt.input, func(t *testing.T) {
+			zone, ok := ParseZone(tt.input)
+			assert.Equal(t, ok, tt.valid)
+			if tt.valid {
+				assert.DeepEqual(t, zone, tt.zone)
+			}
+		})
+	}
+}

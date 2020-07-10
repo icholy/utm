@@ -10,12 +10,12 @@ func ExampleLookupSRID() {
 	if zone, ok := utm.LookupSRID(32617); ok {
 		fmt.Println(zone)
 	}
-	// Output: 17N
+	// Output: 17 (north)
 }
 
 func ExampleLatLonZone() {
 	fmt.Println(utm.LatLonZone(50.77535, 6.008))
-	// Output: 32N
+	// Output: 32 (north)
 }
 
 func ExampleToUTM() {
@@ -23,7 +23,7 @@ func ExampleToUTM() {
 	fmt.Println("Zone:", zone)
 	fmt.Printf("Easting: %f\n", easting)
 	fmt.Printf("Northing: %f\n", northing)
-	// Output: Zone: 32N
+	// Output: Zone: 32 (north)
 	// Easting: 289059.493943
 	// Northing: 5629111.846925
 }

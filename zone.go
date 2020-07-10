@@ -2,6 +2,8 @@ package utm
 
 import (
 	"fmt"
+	"strconv"
+	"unicode"
 )
 
 // Zone specifies the zone number and hemisphere
@@ -13,9 +15,9 @@ type Zone struct {
 // String returns a text representation of the zone
 func (z Zone) String() string {
 	if z.North {
-		return fmt.Sprintf("%dN", z.N)
+		return fmt.Sprintf("%d (north)", z.N)
 	}
-	return fmt.Sprintf("%dS", z.N)
+	return fmt.Sprintf("%d (south)", z.N)
 }
 
 // SRID returns the zone EPSG/SRID code
@@ -68,4 +70,24 @@ func LatLonZone(latitude float64, longitude float64) Zone {
 		N:     int((longitude+180)/6) + 1,
 		North: north,
 	}
+}
+
+// ParseZone parses a zone number followed by a zone letter
+func ParseZone(s string) (Zone, bool) {
+	if len(s) < 2 {
+		return Zone{}, false
+	}
+	n, err := strconv.Atoi(s[:len(s)-1])
+	if err != nil {
+		return Zone{}, false
+	}
+	var north bool
+	switch unicode.ToUpper(rune(s[len(s)-1])) {
+	case 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X':
+		north = true
+	case 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M':
+	default:
+		return Zone{}, false
+	}
+	return Zone{N: n, North: north}, true
 }
