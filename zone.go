@@ -74,7 +74,7 @@ func (z Zone) CentralMeridian() float64 {
 }
 
 // LatLonZone returns the Zone for the provided coordinates
-func LatLonZone(latitude float64, longitude float64) Zone {
+func LatLonZone(latitude, longitude float64) Zone {
 	north := latitude >= 0
 	if 56 <= latitude && latitude <= 64 && 3 <= longitude && longitude <= 12 {
 		return Zone{Number: 32, North: north}
