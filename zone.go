@@ -50,7 +50,9 @@ func (z Zone) SRID() int {
 	return z.Number + 32700
 }
 
-// LookupSRID returns a Zone by its EPSG/SRID code
+// LookupSRID returns a Zone by its EPSG/SRID code.
+// Since the srid code only specifies the longitude zone
+// number, the zone letter is left unset.
 func LookupSRID(srid int) (Zone, bool) {
 	if 32601 <= srid && srid <= 32660 {
 		return Zone{
