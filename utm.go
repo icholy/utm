@@ -34,12 +34,12 @@ const (
 
 // ToLatLon converts UTM coordinates to EPSG:4326 latitude/longitude
 // Note: the zone's North field must be correctly set, the letter is ignored
-func (zone Zone) ToLatLon(easting, northing float64) (latitude, longitude float64) {
+func (z Zone) ToLatLon(easting, northing float64) (latitude, longitude float64) {
 
 	x := easting - 500000
 	y := northing
 
-	if !zone.North {
+	if !z.North {
 		y -= 10000000
 	}
 
@@ -87,7 +87,7 @@ func (zone Zone) ToLatLon(easting, northing float64) (latitude, longitude float6
 		d5/120*(5-2*c+28*p_tan2-3*c2+8*_E_P2+24*p_tan4)) / p_cos
 
 	latitude = toDeg(latitude)
-	longitude = toDeg(longitude) + zone.CentralMeridian()
+	longitude = toDeg(longitude) + z.CentralMeridian()
 
 	return latitude, longitude
 }
