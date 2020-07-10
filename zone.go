@@ -42,7 +42,7 @@ func LookupSRID(srid int) (Zone, bool) {
 	return Zone{}, false
 }
 
-// CentralMerdian returns the zone's center longitude
+// CentralMeridian returns the zone's center longitude
 func (z Zone) CentralMeridian() float64 {
 	return float64((z.N-1)*6 - 180 + 3)
 }
