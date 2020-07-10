@@ -1,4 +1,4 @@
-# WGS48 UTM Conversion
+# WGS84 UTM Conversion
 
 > Package for converting to and from the Universal Transverse Mercator coordinate system
 
