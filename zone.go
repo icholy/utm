@@ -8,25 +8,25 @@ import (
 
 // Zone specifies the zone number and hemisphere
 type Zone struct {
-	N     int  // Zone number 1 to 60
-	L     rune // Zone letter C to X (omitting O, I)
-	North bool // Zone hemisphere
+	Number int  // Zone number 1 to 60
+	Letter rune // Zone letter C to X (omitting O, I)
+	North  bool // Zone hemisphere
 }
 
 // String returns a text representation of the zone
 func (z Zone) String() string {
-	if z.L == 0 {
-		z.L = '?'
+	if z.Letter == 0 {
+		z.Letter = '?'
 	}
 	if z.North {
-		return fmt.Sprintf("%d%c (north)", z.N, z.L)
+		return fmt.Sprintf("%d%c (north)", z.Number, z.Letter)
 	}
-	return fmt.Sprintf("%d%c (south)", z.N, z.L)
+	return fmt.Sprintf("%d%c (south)", z.Number, z.Letter)
 }
 
 // Valid checks if the zone is valid
 func (z Zone) Valid() bool {
-	switch z.L {
+	switch z.Letter {
 	case 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X':
 		if !z.North {
 			return false
@@ -39,28 +39,28 @@ func (z Zone) Valid() bool {
 	default:
 		return false
 	}
-	return 1 <= z.N && z.N <= 60
+	return 1 <= z.Number && z.Number <= 60
 }
 
 // SRID returns the zone EPSG/SRID code
 func (z Zone) SRID() int {
 	if z.North {
-		return z.N + 32600
+		return z.Number + 32600
 	}
-	return z.N + 32700
+	return z.Number + 32700
 }
 
 // LookupSRID returns a Zone by its EPSG/SRID code
 func LookupSRID(srid int) (Zone, bool) {
 	if 32601 <= srid && srid <= 32660 {
 		return Zone{
-			N:     srid - 32600,
-			North: true,
+			Number: srid - 32600,
+			North:  true,
 		}, true
 	}
 	if 32701 <= srid && srid <= 32760 {
 		return Zone{
-			N: srid - 32700,
+			Number: srid - 32700,
 		}, true
 	}
 	return Zone{}, false
@@ -68,24 +68,24 @@ func LookupSRID(srid int) (Zone, bool) {
 
 // CentralMeridian returns the zone's center longitude
 func (z Zone) CentralMeridian() float64 {
-	return float64((z.N-1)*6 - 180 + 3)
+	return float64((z.Number-1)*6 - 180 + 3)
 }
 
 // LatLonZone returns the Zone for the provided coordinates
 func LatLonZone(latitude float64, longitude float64) Zone {
 	north := latitude >= 0
 	if 56 <= latitude && latitude <= 64 && 3 <= longitude && longitude <= 12 {
-		return Zone{N: 32, North: north}
+		return Zone{Number: 32, North: north}
 	}
 	if 72 <= latitude && latitude <= 84 && longitude >= 0 {
 		if longitude <= 9 {
-			return Zone{N: 31, North: north}
+			return Zone{Number: 31, North: north}
 		} else if longitude <= 21 {
-			return Zone{N: 33, North: north}
+			return Zone{Number: 33, North: north}
 		} else if longitude <= 33 {
-			return Zone{N: 35, North: north}
+			return Zone{Number: 35, North: north}
 		} else if longitude <= 42 {
-			return Zone{N: 37, North: north}
+			return Zone{Number: 37, North: north}
 		}
 	}
 	const letters = "CDEFGHJKLMNPQRSTUVWXX"
@@ -94,9 +94,9 @@ func LatLonZone(latitude float64, longitude float64) Zone {
 		letter = rune(letters[int(latitude+80)>>3])
 	}
 	return Zone{
-		N:     int((longitude+180)/6) + 1,
-		L:     letter,
-		North: north,
+		Number: int((longitude+180)/6) + 1,
+		Letter: letter,
+		North:  north,
 	}
 }
 
@@ -118,5 +118,5 @@ func ParseZone(s string) (Zone, bool) {
 	default:
 		return Zone{}, false
 	}
-	return Zone{N: n, L: rune(s[last]), North: north}, true
+	return Zone{Number: n, Letter: rune(s[last]), North: north}, true
 }
