@@ -8,9 +8,9 @@ import (
 
 // Zone specifies the zone number and hemisphere
 type Zone struct {
-	N     int    // Zone number 1-60
-	L     string // Zone Letter C to X (omitting O, I)
-	North bool
+	N     int    // Zone number 1 to 60
+	L     string // Zone letter C to X (omitting O, I)
+	North bool   // Zone hemisphere
 }
 
 // String returns a text representation of the zone
