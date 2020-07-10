@@ -8,16 +8,20 @@ import (
 
 // Zone specifies the zone number and hemisphere
 type Zone struct {
-	N     int // 1-60
+	N     int    // Zone number 1-60
+	L     string // Zone Letter C to X (omitting O, I)
 	North bool
 }
 
 // String returns a text representation of the zone
 func (z Zone) String() string {
-	if z.North {
-		return fmt.Sprintf("%d (north)", z.N)
+	if z.L == "" {
+		z.L = "?"
 	}
-	return fmt.Sprintf("%d (south)", z.N)
+	if z.North {
+		return fmt.Sprintf("%d%s (north)", z.N, z.L)
+	}
+	return fmt.Sprintf("%d%s (south)", z.N, z.L)
 }
 
 // SRID returns the zone EPSG/SRID code
@@ -66,8 +70,14 @@ func LatLonZone(latitude float64, longitude float64) Zone {
 			return Zone{N: 37, North: north}
 		}
 	}
+	const letters = "CDEFGHJKLMNPQRSTUVWXX"
+	var letter string
+	if -80 <= latitude && latitude <= 84 {
+		letter = string(letters[int(latitude+80)>>3])
+	}
 	return Zone{
 		N:     int((longitude+180)/6) + 1,
+		L:     letter,
 		North: north,
 	}
 }
@@ -90,5 +100,5 @@ func ParseZone(s string) (Zone, bool) {
 	default:
 		return Zone{}, false
 	}
-	return Zone{N: n, North: north}, true
+	return Zone{N: n, L: string(s[last]), North: north}, true
 }

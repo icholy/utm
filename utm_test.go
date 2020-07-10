@@ -22,7 +22,7 @@ func TestFromLatLon(t *testing.T) {
 			longitude: 6.08389,
 			easting:   294408.917,
 			northing:  5628897.997,
-			zone:      Zone{N: 32, North: true},
+			zone:      Zone{N: 32, L: "U", North: true},
 		},
 		{
 			name:      "New York, USA",
@@ -30,7 +30,7 @@ func TestFromLatLon(t *testing.T) {
 			longitude: -74.00597,
 			easting:   583959.959,
 			northing:  4507523.087,
-			zone:      Zone{N: 18, North: true},
+			zone:      Zone{N: 18, L: "T", North: true},
 		},
 		{
 			name:      "Wellington, New Zealand",
@@ -38,7 +38,7 @@ func TestFromLatLon(t *testing.T) {
 			longitude: 174.77624,
 			easting:   313784.305,
 			northing:  5427057.321,
-			zone:      Zone{N: 60, North: false},
+			zone:      Zone{N: 60, L: "G", North: false},
 		},
 		{
 			name:      "Capetown, South Africa",
@@ -46,7 +46,7 @@ func TestFromLatLon(t *testing.T) {
 			longitude: 18.42406,
 			easting:   261877.816,
 			northing:  6243185.589,
-			zone:      Zone{N: 34, North: false},
+			zone:      Zone{N: 34, L: "H", North: false},
 		},
 		{
 			name:      "Mendoza, Argentina",
@@ -54,7 +54,7 @@ func TestFromLatLon(t *testing.T) {
 			longitude: -68.84405,
 			easting:   514586.227,
 			northing:  6360876.824,
-			zone:      Zone{N: 19, North: false},
+			zone:      Zone{N: 19, L: "H", North: false},
 		},
 		{
 			name:      "Fairbanks, Alaska, USA",
@@ -62,7 +62,7 @@ func TestFromLatLon(t *testing.T) {
 			longitude: -147.71639,
 			easting:   466013.272,
 			northing:  7190568,
-			zone:      Zone{N: 6, North: true},
+			zone:      Zone{N: 6, L: "W", North: true},
 		},
 		{
 			name:      "Ben Nevis, Scotland, UK",
@@ -70,7 +70,7 @@ func TestFromLatLon(t *testing.T) {
 			longitude: -5.00601,
 			easting:   377485.765,
 			northing:  6296561.854,
-			zone:      Zone{N: 30, North: true},
+			zone:      Zone{N: 30, L: "V", North: true},
 		},
 	}
 	for _, tt := range tests {
@@ -120,10 +120,10 @@ func TestParseZone(t *testing.T) {
 		zone  Zone
 		valid bool
 	}{
-		{input: "45N", zone: Zone{N: 45, North: true}, valid: true},
-		{input: "12J", zone: Zone{N: 12, North: false}, valid: true},
-		{input: "3G", zone: Zone{N: 3, North: false}, valid: true},
-		{input: "5R", zone: Zone{N: 5, North: true}, valid: true},
+		{input: "45N", zone: Zone{N: 45, L: "N", North: true}, valid: true},
+		{input: "12J", zone: Zone{N: 12, L: "J", North: false}, valid: true},
+		{input: "3G", zone: Zone{N: 3, L: "G", North: false}, valid: true},
+		{input: "5R", zone: Zone{N: 5, L: "R", North: true}, valid: true},
 	}
 	for _, tt := range tests {
 		t.Run(tt.input, func(t *testing.T) {
