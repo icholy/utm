@@ -35,7 +35,7 @@ func ExampleToUTM() {
 	// Northing: 5629111.846925
 }
 
-func ExampleToLatLon() {
+func ExampleZone_ToLatLon() {
 	zone, _ := utm.LookupSRID(32632)
 	latitude, longitude := zone.ToLatLon(289059.493943, 5629111.846925)
 	fmt.Printf("Latitude: %f\n", latitude)
