@@ -89,3 +89,22 @@ func TestFromLatLon(t *testing.T) {
 		})
 	}
 }
+
+func TestLookupSRID(t *testing.T) {
+	tests := []struct {
+		srid int
+		zone Zone
+	}{
+		{srid: 32610, zone: Zone{N: 10, North: true}},
+		{srid: 32659, zone: Zone{N: 59, North: true}},
+		{srid: 32734, zone: Zone{N: 34, North: false}},
+		{srid: 32701, zone: Zone{N: 1, North: false}},
+	}
+	for _, tt := range tests {
+		t.Run(tt.zone.String(), func(t *testing.T) {
+			zone, ok := LookupSRID(tt.srid)
+			assert.Assert(t, ok)
+			assert.DeepEqual(t, zone, tt.zone)
+		})
+	}
+}
