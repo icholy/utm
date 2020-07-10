@@ -89,7 +89,7 @@ func ParseZone(s string) (Zone, bool) {
 	}
 	last := len(s) - 1
 	n, err := strconv.Atoi(s[:last])
-	if err != nil {
+	if err != nil || n < 1 || n > 60 {
 		return Zone{}, false
 	}
 	var north bool
