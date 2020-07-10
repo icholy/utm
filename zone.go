@@ -8,20 +8,38 @@ import (
 
 // Zone specifies the zone number and hemisphere
 type Zone struct {
-	N     int    // Zone number 1 to 60
-	L     string // Zone letter C to X (omitting O, I)
-	North bool   // Zone hemisphere
+	N     int  // Zone number 1 to 60
+	L     rune // Zone letter C to X (omitting O, I)
+	North bool // Zone hemisphere
 }
 
 // String returns a text representation of the zone
 func (z Zone) String() string {
-	if z.L == "" {
-		z.L = "?"
+	if z.L == 0 {
+		z.L = '?'
 	}
 	if z.North {
-		return fmt.Sprintf("%d%s (north)", z.N, z.L)
+		return fmt.Sprintf("%d%c (north)", z.N, z.L)
 	}
-	return fmt.Sprintf("%d%s (south)", z.N, z.L)
+	return fmt.Sprintf("%d%c (south)", z.N, z.L)
+}
+
+// Valid checks if the zone is valid
+func (z Zone) Valid() bool {
+	switch z.L {
+	case 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X':
+		if z.North {
+			return false
+		}
+	case 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M':
+		if !z.North {
+			return false
+		}
+	case 0:
+	default:
+		return false
+	}
+	return 1 <= z.N && z.N <= 60
 }
 
 // SRID returns the zone EPSG/SRID code
@@ -71,9 +89,9 @@ func LatLonZone(latitude float64, longitude float64) Zone {
 		}
 	}
 	const letters = "CDEFGHJKLMNPQRSTUVWXX"
-	var letter string
+	var letter rune
 	if -80 <= latitude && latitude <= 84 {
-		letter = string(letters[int(latitude+80)>>3])
+		letter = rune(letters[int(latitude+80)>>3])
 	}
 	return Zone{
 		N:     int((longitude+180)/6) + 1,
@@ -100,5 +118,5 @@ func ParseZone(s string) (Zone, bool) {
 	default:
 		return Zone{}, false
 	}
-	return Zone{N: n, L: string(s[last]), North: north}, true
+	return Zone{N: n, L: rune(s[last]), North: north}, true
 }
