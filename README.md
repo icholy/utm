@@ -18,7 +18,7 @@ easting, northing, zone := utm.ToUTM(50.77535, 6.008)
 
 **Convert from UTM to lat/lon**
 ``` go
-latitude, longitude := utm.ToLatLon(294408.917, 5628897.997, zone)
+latitude, longitude := zone.ToLatLon(294408.917, 5628897.997)
 ```
 
 ## Credit:

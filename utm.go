@@ -34,7 +34,7 @@ const (
 
 // ToLatLon converts UTM coordinates to EPSG:4326 latitude/longitude
 // Note: the zone's North field must be correctly set, the letter is ignored
-func ToLatLon(easting, northing float64, zone Zone) (latitude, longitude float64) {
+func (zone Zone) ToLatLon(easting, northing float64) (latitude, longitude float64) {
 
 	x := easting - 500000
 	y := northing

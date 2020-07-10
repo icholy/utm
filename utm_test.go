@@ -86,7 +86,7 @@ func TestFromLatLon(t *testing.T) {
 				assert.DeepEqual(t, northing, tt.northing, approx)
 			})
 			t.Run("ToLatLon", func(t *testing.T) {
-				latitude, longitude := ToLatLon(tt.easting, tt.northing, tt.zone)
+				latitude, longitude := tt.zone.ToLatLon(tt.easting, tt.northing)
 				assert.DeepEqual(t, latitude, tt.latitude, approx)
 				assert.DeepEqual(t, longitude, tt.longitude, approx)
 			})

@@ -37,7 +37,7 @@ func ExampleToUTM() {
 
 func ExampleToLatLon() {
 	zone, _ := utm.LookupSRID(32632)
-	latitude, longitude := utm.ToLatLon(289059.493943, 5629111.846925, zone)
+	latitude, longitude := zone.ToLatLon(289059.493943, 5629111.846925)
 	fmt.Printf("Latitude: %f\n", latitude)
 	fmt.Printf("Longitude: %f\n", longitude)
 	// Output: Latitude: 50.775350
