@@ -77,12 +77,13 @@ func ParseZone(s string) (Zone, bool) {
 	if len(s) < 2 {
 		return Zone{}, false
 	}
-	n, err := strconv.Atoi(s[:len(s)-1])
+	last := len(s) - 1
+	n, err := strconv.Atoi(s[:last])
 	if err != nil {
 		return Zone{}, false
 	}
 	var north bool
-	switch unicode.ToUpper(rune(s[len(s)-1])) {
+	switch unicode.ToUpper(rune(s[last])) {
 	case 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X':
 		north = true
 	case 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M':
