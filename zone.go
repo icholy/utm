@@ -28,11 +28,11 @@ func (z Zone) String() string {
 func (z Zone) Valid() bool {
 	switch z.L {
 	case 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X':
-		if z.North {
+		if !z.North {
 			return false
 		}
 	case 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M':
-		if !z.North {
+		if z.North {
 			return false
 		}
 	case 0:

@@ -135,3 +135,20 @@ func TestParseZone(t *testing.T) {
 		})
 	}
 }
+
+func TestZoneValid(t *testing.T) {
+	tests := []struct {
+		zone  Zone
+		valid bool
+	}{
+		{zone: Zone{N: 1, L: 'S', North: true}, valid: true},
+		{zone: Zone{N: 8, L: 'S', North: false}, valid: false},
+		{zone: Zone{N: 70, L: 'S', North: true}, valid: false},
+		{zone: Zone{N: 34, L: 'O', North: true}, valid: false},
+	}
+	for _, tt := range tests {
+		t.Run(tt.zone.String(), func(t *testing.T) {
+			assert.Equal(t, tt.zone.Valid(), tt.valid)
+		})
+	}
+}
