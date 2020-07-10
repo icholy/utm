@@ -75,6 +75,10 @@ func TestFromLatLon(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			t.Run("LatLonZone", func(t *testing.T) {
+				zone := LatLonZone(tt.latitude, tt.longitude)
+				assert.DeepEqual(t, zone, tt.zone)
+			})
 			t.Run("ToUTM", func(t *testing.T) {
 				easting, northing, zone := ToUTM(tt.latitude, tt.longitude)
 				assert.DeepEqual(t, zone, tt.zone)
