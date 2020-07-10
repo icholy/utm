@@ -124,6 +124,9 @@ func TestParseZone(t *testing.T) {
 		{input: "12J", zone: Zone{N: 12, L: 'J', North: false}, valid: true},
 		{input: "3G", zone: Zone{N: 3, L: 'G', North: false}, valid: true},
 		{input: "5R", zone: Zone{N: 5, L: 'R', North: true}, valid: true},
+		{input: "5", zone: Zone{}, valid: false},
+		{input: "RR", zone: Zone{}, valid: false},
+		{input: "555R", zone: Zone{}, valid: false},
 	}
 	for _, tt := range tests {
 		t.Run(tt.input, func(t *testing.T) {

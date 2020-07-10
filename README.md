@@ -4,10 +4,11 @@
 
 ## Examples:
 
-**Lookup a zone by lat/lon or srid code**
+**Lookup a zone by lat/lon, srid code, or text**
 ``` go
 zone := utm.LatLonZone(50.77535, 6.008)
 zone, _ := utm.LookupSRID(32601)
+zone, _ := utm.ParseZone("32U")
 ```
 
 **Convert from lat/lon to UTM**
