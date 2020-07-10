@@ -94,7 +94,7 @@ func TestFromLatLon(t *testing.T) {
 	}
 }
 
-func TestLookupSRID(t *testing.T) {
+func TestSRID(t *testing.T) {
 	tests := []struct {
 		srid int
 		zone Zone
@@ -109,6 +109,7 @@ func TestLookupSRID(t *testing.T) {
 			zone, ok := LookupSRID(tt.srid)
 			assert.Assert(t, ok)
 			assert.DeepEqual(t, zone, tt.zone)
+			assert.Equal(t, zone.SRID(), tt.srid)
 		})
 	}
 }
