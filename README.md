@@ -23,6 +23,10 @@ easting, northing, zone := utm.ToUTM(50.77535, 6.008)
 latitude, longitude := zone.ToLatLon(294408.917, 5628897.997)
 ```
 
+## Zones
+
+![](grid.gif)
+
 ## Credit:
 
 This was mostly copied from: https://github.com/Turbo87/utm
