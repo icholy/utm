@@ -94,6 +94,13 @@ func (z Zone) ToLatLon(easting, northing float64) (latitude, longitude float64) 
 
 // ToUTM convert a EPSG:4326 latitude/longitude to UTM.
 func ToUTM(latitude, longitude float64) (easting, northing float64, zone Zone) {
+	zone = LatLonZone(latitude, longitude)
+	easting, northing = zone.ToUTM(latitude, longitude)
+	return easting, northing, zone
+}
+
+// ToUTM convert a EPSG:4326 latitude/longitude to UTM.
+func (z Zone) ToUTM(latitude, longitude float64) (easting, northing float64) {
 
 	latRad := toRad(latitude)
 	latSin := math.Sin(latRad)
@@ -104,8 +111,7 @@ func ToUTM(latitude, longitude float64) (easting, northing float64, zone Zone) {
 	latTan4 := latTan2 * latTan2
 
 	lonRad := toRad(longitude)
-	zone = LatLonZone(latitude, longitude)
-	centralLonRad := toRad(zone.CentralMeridian())
+	centralLonRad := toRad(z.CentralMeridian())
 
 	n := _R / math.Sqrt(1-_E*math.Pow(latSin, 2))
 	c := _EP2 * latCos * latCos
@@ -134,7 +140,7 @@ func ToUTM(latitude, longitude float64) (easting, northing float64, zone Zone) {
 		northing += 10000000
 	}
 
-	return easting, northing, zone
+	return easting, northing
 }
 
 func toDeg(r float64) float64 { return r / (math.Pi / 180) }
