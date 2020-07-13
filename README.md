@@ -4,6 +4,8 @@
 
 > Package for converting to and from the Universal Transverse Mercator coordinate system
 
+![](grid.gif)
+
 ## Examples:
 
 **Lookup a zone by lat/lon, srid code, or text**
@@ -22,10 +24,6 @@ easting, northing, zone := utm.ToUTM(50.77535, 6.008)
 ``` go
 latitude, longitude := zone.ToLatLon(294408.917, 5628897.997)
 ```
-
-## Zones
-
-![](grid.gif)
 
 ## Credit:
 
