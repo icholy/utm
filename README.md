@@ -17,7 +17,7 @@ zone, _ := utm.ParseZone("32U")
 
 **Convert from lat/lon to UTM**
 ``` go
-easting, northing, zone := utm.ToUTM(50.77535, 6.008)
+easting, northing := zone.ToUTM(50.77535, 6.008)
 ```
 
 **Convert from UTM to lat/lon**
