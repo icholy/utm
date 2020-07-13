@@ -75,25 +75,25 @@ func (z Zone) CentralMeridian() float64 {
 
 // LatLonZone returns the Zone for the provided coordinates
 func LatLonZone(latitude, longitude float64) Zone {
-	north := latitude >= 0
-	if 56 <= latitude && latitude <= 64 && 3 <= longitude && longitude <= 12 {
-		return Zone{Number: 32, North: north}
-	}
-	if 72 <= latitude && latitude <= 84 && longitude >= 0 {
-		if longitude <= 9 {
-			return Zone{Number: 31, North: north}
-		} else if longitude <= 21 {
-			return Zone{Number: 33, North: north}
-		} else if longitude <= 33 {
-			return Zone{Number: 35, North: north}
-		} else if longitude <= 42 {
-			return Zone{Number: 37, North: north}
-		}
-	}
 	const letters = "CDEFGHJKLMNPQRSTUVWXX"
 	var letter rune
 	if -80 <= latitude && latitude <= 84 {
 		letter = rune(letters[int(latitude+80)>>3])
+	}
+	north := latitude >= 0
+	if 56 <= latitude && latitude <= 64 && 3 <= longitude && longitude <= 12 {
+		return Zone{Number: 32, Letter: letter, North: north}
+	}
+	if 72 <= latitude && latitude <= 84 && longitude >= 0 {
+		if longitude <= 9 {
+			return Zone{Number: 31, Letter: letter, North: north}
+		} else if longitude <= 21 {
+			return Zone{Number: 33, Letter: letter, North: north}
+		} else if longitude <= 33 {
+			return Zone{Number: 35, Letter: letter, North: north}
+		} else if longitude <= 42 {
+			return Zone{Number: 37, Letter: letter, North: north}
+		}
 	}
 	return Zone{
 		Number: int((longitude+180)/6) + 1,
