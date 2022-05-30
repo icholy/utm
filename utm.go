@@ -67,7 +67,7 @@ func (z Zone) ToLatLon(easting, northing float64) (latitude, longitude float64) 
 	n := _R / epSinSqrt
 	rad := (1 - _E) / epSin
 
-	c := _xE * pCos * pCos
+	c := _EP2 * pCos * pCos
 	c2 := c * c
 
 	d := x / (n * _K0)
@@ -86,8 +86,10 @@ func (z Zone) ToLatLon(easting, northing float64) (latitude, longitude float64) 
 		d3/6*(1+2*pTan2+c) +
 		d5/120*(5-2*c+28*pTan2-3*c2+8*_EP2+24*pTan4)) / pCos
 
+	longitude = modAngle(longitude + toRad(z.CentralMeridian()))
+
 	latitude = toDeg(latitude)
-	longitude = toDeg(longitude) + z.CentralMeridian()
+	longitude = toDeg(longitude)
 
 	return latitude, longitude
 }
@@ -116,7 +118,7 @@ func (z Zone) ToUTM(latitude, longitude float64) (easting, northing float64) {
 	n := _R / math.Sqrt(1-_E*math.Pow(latSin, 2))
 	c := _EP2 * latCos * latCos
 
-	a := latCos * (lonRad - centralLonRad)
+	a := latCos * modAngle(lonRad-centralLonRad)
 	a2 := a * a
 	a3 := a2 * a
 	a4 := a3 * a
@@ -145,3 +147,17 @@ func (z Zone) ToUTM(latitude, longitude float64) (easting, northing float64) {
 
 func toDeg(r float64) float64 { return r / (math.Pi / 180) }
 func toRad(d float64) float64 { return d * (math.Pi / 180) }
+
+// modAngle returns angle in radians to be between -pi and pi
+func modAngle(value float64) float64 {
+	return mod(value+math.Pi, 2.0*math.Pi) - math.Pi
+}
+
+// mod acts like python's % operator
+func mod(d, m float64) float64 {
+	res := math.Mod(d, m)
+	if (res < 0 && m > 0) || (res > 0 && m < 0) {
+		return res + m
+	}
+	return res
+}
