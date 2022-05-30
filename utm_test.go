@@ -1,6 +1,7 @@
 package utm
 
 import (
+	"math"
 	"testing"
 
 	"github.com/google/go-cmp/cmp/cmpopts"
@@ -154,4 +155,18 @@ func TestZoneValid(t *testing.T) {
 			assert.Equal(t, tt.zone.Valid(), tt.valid)
 		})
 	}
+}
+
+func TestForcingAntiMeridian(t *testing.T) {
+	// Force point just west of anti-meridian to east zone 1
+	zone, _ := ParseZone("1N")
+	easting, northing := zone.ToUTM(0, 179.9)
+	_, lon := zone.ToLatLon(easting, northing)
+	assert.Assert(t, math.Abs(179.9-lon) < 0.00001)
+
+	// Force point just east of anti-meridian to west zone 60
+	zone, _ = ParseZone("60N")
+	easting, northing = zone.ToUTM(0, -179.9)
+	_, lon = zone.ToLatLon(easting, northing)
+	assert.Assert(t, math.Abs(-179.9-lon) < 0.00001)
 }

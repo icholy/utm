@@ -41,5 +41,5 @@ func ExampleZone_ToLatLon() {
 	fmt.Printf("Latitude: %f\n", latitude)
 	fmt.Printf("Longitude: %f\n", longitude)
 	// Output: Latitude: 50.775350
-	// Longitude: 6.007999
+	// Longitude: 6.008000
 }
