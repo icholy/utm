@@ -3,7 +3,7 @@ package utm_test
 import (
 	"fmt"
 
-	"github.com/icholy/utm"
+	"github.com/TucarApp/utm"
 )
 
 func ExampleLookupSRID() {

@@ -1,4 +1,4 @@
-module github.com/icholy/utm
+module github.com/TucarApp/utm
 
 go 1.14
 

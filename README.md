@@ -1,6 +1,6 @@
 # WGS84 UTM Conversion
 
-[![GoDoc](https://godoc.org/github.com/icholy/utm?status.svg)](https://godoc.org/github.com/icholy/utm)
+[![GoDoc](https://godoc.org/github.com/TucarApp/utm?status.svg)](https://godoc.org/github.com/TucarApp/utm)
 
 > Package for converting to and from the Universal Transverse Mercator coordinate system
 
